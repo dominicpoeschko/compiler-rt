@@ -138,7 +138,8 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/udivti3.c
     builtins/umoddi3.c
     builtins/umodsi3.c
-    builtins/umodti3.c)
+    builtins/umodti3.c
+)
 
 list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
