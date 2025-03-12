@@ -139,6 +139,8 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/umoddi3.c
     builtins/umodsi3.c
     builtins/umodti3.c
+    builtins/extendbfsf2.c
+    builtins/extendxftf2.c
 )
 
 list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
@@ -165,6 +167,7 @@ set(compiler-rt_flags
     -Wno-unreachable-code-break
     -Wno-unsafe-buffer-usage
     -Wno-visibility
+    -Wno-tautological-value-range-compare
     -DVISIBILITY_HIDDEN
     -fvisibility=hidden
     -fno-stack-protector)
