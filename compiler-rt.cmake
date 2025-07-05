@@ -3,11 +3,14 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/absvsi2.c
     builtins/absvti2.c
     builtins/adddf3.c
+    builtins/addsf3.c
     builtins/addtf3.c
     builtins/addvdi3.c
     builtins/addvsi3.c
     builtins/addvti3.c
+    #builtins/arm/adddf3vfp.S
     builtins/arm/addsf3.S
+    #builtins/arm/addsf3vfp.S
     builtins/arm/aeabi_cdcmp.S
     builtins/arm/aeabi_cdcmpeq_check_nan.c
     builtins/arm/aeabi_cfcmp.S
@@ -25,13 +28,89 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/arm/aeabi_memset.S
     builtins/arm/aeabi_uidivmod.S
     builtins/arm/aeabi_uldivmod.S
+    builtins/arm/bswapdi2.S
+    builtins/arm/bswapsi2.S
+    #builtins/arm/chkstk.S
+    #builtins/arm/clzdi2.S
+    #builtins/arm/clzsi2.S
     builtins/arm/comparesf2.S
+    #builtins/arm/divdf3vfp.S
+    #builtins/arm/divmodsi4.S
+    #builtins/arm/divsf3vfp.S
     builtins/arm/divsi3.S
+    #builtins/arm/eqdf2vfp.S
+    #builtins/arm/eqsf2vfp.S
+    #builtins/arm/extendsfdf2vfp.S
+    #builtins/arm/fixdfsivfp.S
+    #builtins/arm/fixsfsivfp.S
+    #builtins/arm/fixunsdfsivfp.S
+    #builtins/arm/fixunssfsivfp.S
+    #builtins/arm/floatsidfvfp.S
+    #builtins/arm/floatsisfvfp.S
+    #builtins/arm/floatunssidfvfp.S
+    #builtins/arm/floatunssisfvfp.S
+    #builtins/arm/fp_mode.c
+    #builtins/arm/gedf2vfp.S
+    #builtins/arm/gesf2vfp.S
+    #builtins/arm/gtdf2vfp.S
+    #builtins/arm/gtsf2vfp.S
+    #builtins/arm/ledf2vfp.S
+    #builtins/arm/lesf2vfp.S
+    #builtins/arm/ltdf2vfp.S
+    #builtins/arm/ltsf2vfp.S
+    #builtins/arm/modsi3.S
+    #builtins/arm/muldf3vfp.S
+    #builtins/arm/mulsf3vfp.S
+    #builtins/arm/nedf2vfp.S
+    #builtins/arm/negdf2vfp.S
+    #builtins/arm/negsf2vfp.S
+    #builtins/arm/nesf2vfp.S
+    #builtins/arm/restore_vfp_d8_d15_regs.S
+    #builtins/arm/save_vfp_d8_d15_regs.S
+    #builtins/arm/subdf3vfp.S
+    #builtins/arm/subsf3vfp.S
+    #builtins/arm/switch16.S
+    #builtins/arm/switch32.S
+    #builtins/arm/switch8.S
+    #builtins/arm/switchu8.S
+    #builtins/arm/sync_fetch_and_add_4.S
+    #builtins/arm/sync_fetch_and_add_8.S
+    #builtins/arm/sync_fetch_and_and_4.S
+    #builtins/arm/sync_fetch_and_and_8.S
+    #builtins/arm/sync_fetch_and_max_4.S
+    #builtins/arm/sync_fetch_and_max_8.S
+    #builtins/arm/sync_fetch_and_min_4.S
+    #builtins/arm/sync_fetch_and_min_8.S
+    #builtins/arm/sync_fetch_and_nand_4.S
+    #builtins/arm/sync_fetch_and_nand_8.S
+    #builtins/arm/sync_fetch_and_or_4.S
+    #builtins/arm/sync_fetch_and_or_8.S
+    #builtins/arm/sync_fetch_and_sub_4.S
+    #builtins/arm/sync_fetch_and_sub_8.S
+    #builtins/arm/sync_fetch_and_umax_4.S
+    #builtins/arm/sync_fetch_and_umax_8.S
+    #builtins/arm/sync_fetch_and_umin_4.S
+    #builtins/arm/sync_fetch_and_umin_8.S
+    #builtins/arm/sync_fetch_and_xor_4.S
+    #builtins/arm/sync_fetch_and_xor_8.S
+    #builtins/arm/sync_synchronize.S
+    #builtins/arm/truncdfsf2vfp.S
+    #builtins/arm/udivmodsi4.S
     builtins/arm/udivsi3.S
+    #builtins/arm/umodsi3.S
+    #builtins/arm/unorddf2vfp.S
+    #builtins/arm/unordsf2vfp.S
     builtins/ashldi3.c
     builtins/ashlti3.c
     builtins/ashrdi3.c
     builtins/ashrti3.c
+    #builtins/atomic.c
+    #builtins/atomic_flag_clear.c
+    #builtins/atomic_flag_clear_explicit.c
+    #builtins/atomic_flag_test_and_set.c
+    #builtins/atomic_flag_test_and_set_explicit.c
+    #builtins/atomic_signal_fence.c
+    #builtins/atomic_thread_fence.c
     builtins/bswapdi2.c
     builtins/bswapsi2.c
     builtins/clear_cache.c
@@ -41,6 +120,8 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/cmpdi2.c
     builtins/cmpti2.c
     builtins/comparedf2.c
+    builtins/comparesf2.c
+    builtins/comparetf2.c
     builtins/ctzdi2.c
     builtins/ctzsi2.c
     builtins/ctzti2.c
@@ -49,13 +130,25 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/divdi3.c
     builtins/divmoddi4.c
     builtins/divmodsi4.c
+    builtins/divmodti4.c
     builtins/divsc3.c
     builtins/divsf3.c
+    builtins/divsi3.c
     builtins/divtc3.c
     builtins/divtf3.c
     builtins/divti3.c
+    #builtins/divxc3.c
+    #builtins/emutls.c
+    #builtins/enable_execute_stack.c
+    builtins/eprintf.c
+    builtins/extendbfsf2.c
+    builtins/extenddftf2.c
     builtins/extendhfsf2.c
+    builtins/extendhftf2.c
+    #builtins/extendhfxf2.c
     builtins/extendsfdf2.c
+    builtins/extendsftf2.c
+    #builtins/extendxftf2.c
     builtins/ffsdi2.c
     builtins/ffssi2.c
     builtins/ffsti2.c
@@ -65,26 +158,47 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/fixsfdi.c
     builtins/fixsfsi.c
     builtins/fixsfti.c
+    builtins/fixtfdi.c
+    builtins/fixtfsi.c
+    builtins/fixtfti.c
     builtins/fixunsdfdi.c
     builtins/fixunsdfsi.c
     builtins/fixunsdfti.c
     builtins/fixunssfdi.c
     builtins/fixunssfsi.c
     builtins/fixunssfti.c
+    builtins/fixunstfdi.c
+    builtins/fixunstfsi.c
+    builtins/fixunstfti.c
+    #builtins/fixunsxfdi.c
+    #builtins/fixunsxfsi.c
+    #builtins/fixunsxfti.c
+    #builtins/fixxfdi.c
+    #builtins/fixxfti.c
     builtins/floatdidf.c
     builtins/floatdisf.c
+    builtins/floatditf.c
+    #builtins/floatdixf.c
     builtins/floatsidf.c
     builtins/floatsisf.c
+    builtins/floatsitf.c
     builtins/floattidf.c
     builtins/floattisf.c
+    builtins/floattitf.c
+    #builtins/floattixf.c
     builtins/floatundidf.c
     builtins/floatundisf.c
+    builtins/floatunditf.c
+    #builtins/floatundixf.c
     builtins/floatunsidf.c
     builtins/floatunsisf.c
+    builtins/floatunsitf.c
     builtins/floatuntidf.c
     builtins/floatuntisf.c
+    builtins/floatuntitf.c
+    #builtins/floatuntixf.c
     builtins/fp_mode.c
-    builtins/gcc_personality_v0.c
+    #builtins/gcc_personality_v0.c
     builtins/int_util.c
     builtins/lshrdi3.c
     builtins/lshrti3.c
@@ -99,11 +213,13 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/muloti4.c
     builtins/mulsc3.c
     builtins/mulsf3.c
+    builtins/multc3.c
     builtins/multf3.c
     builtins/multi3.c
     builtins/mulvdi3.c
     builtins/mulvsi3.c
     builtins/mulvti3.c
+    #builtins/mulxc3.c
     builtins/negdf2.c
     builtins/negdi2.c
     builtins/negsf2.c
@@ -120,28 +236,36 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/powidf2.c
     builtins/powisf2.c
     builtins/powitf2.c
+    #builtins/powixf2.c
     builtins/subdf3.c
     builtins/subsf3.c
     builtins/subtf3.c
     builtins/subvdi3.c
     builtins/subvsi3.c
     builtins/subvti3.c
+    #builtins/truncdfbf2.c
     builtins/truncdfhf2.c
     builtins/truncdfsf2.c
+    #builtins/truncsfbf2.c
     builtins/truncsfhf2.c
+    builtins/trunctfbf2.c
+    builtins/trunctfdf2.c
+    builtins/trunctfhf2.c
+    builtins/trunctfsf2.c
+    #builtins/trunctfxf2.c
+    #builtins/truncxfbf2.c
+    #builtins/truncxfhf2.c
     builtins/ucmpdi2.c
     builtins/ucmpti2.c
     builtins/udivdi3.c
     builtins/udivmoddi4.c
     builtins/udivmodsi4.c
     builtins/udivmodti4.c
+    builtins/udivsi3.c
     builtins/udivti3.c
     builtins/umoddi3.c
     builtins/umodsi3.c
-    builtins/umodti3.c
-    builtins/extendbfsf2.c
-    builtins/extendxftf2.c
-)
+    builtins/umodti3.c)
 
 list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
@@ -174,5 +298,5 @@ set(compiler-rt_flags
 
 list(JOIN compiler-rt_flags " " COMPILER_RT_FLAGS)
 
-set_source_files_properties(
-  ${COMPILER_RT_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${COMPILER_RT_FLAGS}")
+set_source_files_properties(${COMPILER_RT_SOURCE_FILES}
+                            PROPERTIES COMPILE_FLAGS "${COMPILER_RT_FLAGS}")
