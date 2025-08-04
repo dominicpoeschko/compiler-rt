@@ -140,7 +140,7 @@ set(COMPILER_RT_SOURCE_FILES
     #builtins/divxc3.c
     #builtins/emutls.c
     #builtins/enable_execute_stack.c
-    builtins/eprintf.c
+    #builtins/eprintf.c
     builtins/extendbfsf2.c
     builtins/extenddftf2.c
     builtins/extendhfsf2.c
