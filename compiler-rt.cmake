@@ -104,7 +104,7 @@ set(COMPILER_RT_SOURCE_FILES
     builtins/ashlti3.c
     builtins/ashrdi3.c
     builtins/ashrti3.c
-    builtins/atomic.c
+    # builtins/atomic.c
     # builtins/atomic_flag_clear.c
     # builtins/atomic_flag_clear_explicit.c
     # builtins/atomic_flag_test_and_set.c
