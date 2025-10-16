@@ -297,6 +297,7 @@ set(compiler-rt_flags
     -Wno-unsafe-buffer-usage
     -Wno-visibility
     -Wno-tautological-value-range-compare
+    -Wno-c++-keyword
     -fno-stack-protector)
 
 list(JOIN compiler-rt_flags " " COMPILER_RT_FLAGS)
