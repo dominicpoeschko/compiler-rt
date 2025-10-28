@@ -300,6 +300,12 @@ set(COMPILER_RT_EXCLUDED_M0_FILES
     builtins/truncsfbf2.c
 )
 
+# Files excluded only for cortex-m33plus
+set(COMPILER_RT_EXCLUDED_M33_FILES
+    builtins/clzdi2.c
+    builtins/clzsi2.c
+)
+
 # Files excluded for all CPUs
 set(COMPILER_RT_EXCLUDED_COMMON_FILES
     builtins/addsf3.c
@@ -347,8 +353,6 @@ set(COMPILER_RT_EXCLUDED_COMMON_FILES
     builtins/atomic_thread_fence.c
     builtins/bswapdi2.c
     builtins/bswapsi2.c
-    builtins/clzdi2.c
-    builtins/clzsi2.c
     builtins/comparesf2.c
     builtins/crtbegin.c
     builtins/crtend.c
@@ -392,6 +396,9 @@ list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_COMMON_FILES})
 # Remove CPU-specific excluded files
 if(TARGET_CPU STREQUAL "cortex-m0plus")
     list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M0_FILES})
+endif()
+if(TARGET_CPU STREQUAL "cortex-m33")
+    list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M33_FILES})
 endif()
 
 list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
