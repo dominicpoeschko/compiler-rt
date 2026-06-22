@@ -36,6 +36,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/comparesf2.S
     builtins/arm/divdf3vfp.S
     builtins/arm/divmodsi4.S
+    # builtins/arm/divsf3.S
     builtins/arm/divsf3vfp.S
     builtins/arm/divsi3.S
     builtins/arm/eqdf2vfp.S
@@ -49,7 +50,10 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/floatsisfvfp.S
     builtins/arm/floatunssidfvfp.S
     builtins/arm/floatunssisfvfp.S
+    # builtins/arm/fnan2.c
+    # builtins/arm/fnorm2.c
     builtins/arm/fp_mode.c
+    # builtins/arm/funder.c
     builtins/arm/gedf2vfp.S
     builtins/arm/gesf2vfp.S
     builtins/arm/gtdf2vfp.S
@@ -60,6 +64,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/ltsf2vfp.S
     builtins/arm/modsi3.S
     builtins/arm/muldf3vfp.S
+    # builtins/arm/mulsf3.S
     builtins/arm/mulsf3vfp.S
     builtins/arm/nedf2vfp.S
     builtins/arm/negdf2vfp.S
@@ -94,6 +99,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/sync_fetch_and_xor_4.S
     builtins/arm/sync_fetch_and_xor_8.S
     builtins/arm/sync_synchronize.S
+    # builtins/arm/thumb1/mulsf3.S
     builtins/arm/truncdfsf2vfp.S
     builtins/arm/udivmodsi4.S
     builtins/arm/udivsi3.S
@@ -230,7 +236,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/negvdi2.c
     builtins/negvsi2.c
     builtins/negvti2.c
-    buildins/os_version_check.c
+    builtins/os_version_check.c
     builtins/paritydi2.c
     builtins/paritysi2.c
     builtins/parityti2.c
@@ -270,7 +276,8 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/udivti3.c
     builtins/umoddi3.c
     builtins/umodsi3.c
-    builtins/umodti3.c)
+    builtins/umodti3.c
+)
 
 # Files excluded only for cortex-m0plus
 set(COMPILER_RT_EXCLUDED_M0_FILES
@@ -377,7 +384,7 @@ set(COMPILER_RT_EXCLUDED_COMMON_FILES
     builtins/gcc_personality_v0.c
     builtins/modsi3.c
     builtins/mulxc3.c
-    buildins/os_version_check.c
+    builtins/os_version_check.c
     builtins/powixf2.c
     builtins/trampoline_setup.c
     builtins/trunctfxf2.c
