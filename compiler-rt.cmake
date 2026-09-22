@@ -307,7 +307,8 @@ set(COMPILER_RT_EXCLUDED_M0_FILES
     builtins/truncsfbf2.c
 )
 
-# Files excluded only for cortex-m33plus
+# Files excluded for the Thumb-2 cores (cortex-m33, cortex-m4): builtins/arm/clz*.S assembles for them, so the C versions
+# would define __clzsi2/__clzdi2 a second time
 set(COMPILER_RT_EXCLUDED_M33_FILES
     builtins/clzdi2.c
     builtins/clzsi2.c
@@ -404,7 +405,7 @@ list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_COMMON_FILES})
 if(TARGET_CPU STREQUAL "cortex-m0plus")
     list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M0_FILES})
 endif()
-if(TARGET_CPU STREQUAL "cortex-m33")
+if(TARGET_CPU STREQUAL "cortex-m33" OR TARGET_CPU STREQUAL "cortex-m4")
     list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M33_FILES})
 endif()
 
