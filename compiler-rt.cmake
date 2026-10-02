@@ -5,6 +5,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/adddf3.c
     builtins/addsf3.c
     builtins/addtf3.c
+    # builtins/addtf3.cpp
     builtins/addvdi3.c
     builtins/addvsi3.c
     builtins/addvti3.c
@@ -42,7 +43,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/comparesf2.S
     builtins/arm/divdf3vfp.S
     builtins/arm/divmodsi4.S
-    # builtins/arm/divsf3.S
+    builtins/arm/divsf3.S
     builtins/arm/divsf3vfp.S
     builtins/arm/divsi3.S
     builtins/arm/eqdf2vfp.S
@@ -56,10 +57,10 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/floatsisfvfp.S
     builtins/arm/floatunssidfvfp.S
     builtins/arm/floatunssisfvfp.S
-    # builtins/arm/fnan2.c
-    # builtins/arm/fnorm2.c
+    builtins/arm/fnan2.c
+    builtins/arm/fnorm2.c
     builtins/arm/fp_mode.c
-    # builtins/arm/funder.c
+    builtins/arm/funder.c
     builtins/arm/gedf2vfp.S
     builtins/arm/gesf2vfp.S
     builtins/arm/gtdf2vfp.S
@@ -70,7 +71,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/ltsf2vfp.S
     builtins/arm/modsi3.S
     builtins/arm/muldf3vfp.S
-    # builtins/arm/mulsf3.S
+    builtins/arm/mulsf3.S
     builtins/arm/mulsf3vfp.S
     builtins/arm/nedf2vfp.S
     builtins/arm/negdf2vfp.S
@@ -105,7 +106,7 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/sync_fetch_and_xor_4.S
     builtins/arm/sync_fetch_and_xor_8.S
     builtins/arm/sync_synchronize.S
-    # builtins/arm/thumb1/mulsf3.S
+    builtins/arm/thumb1/mulsf3.S
     builtins/arm/truncdfsf2vfp.S
     builtins/arm/udivmodsi4.S
     builtins/arm/udivsi3.S
@@ -283,12 +284,48 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/umoddi3.c
     builtins/umodsi3.c
     builtins/umodti3.c
+    builtins/arm/adddf3.S
+    builtins/arm/cmpdf2.S
+    builtins/arm/cmpsf2.S
+    builtins/arm/divdf3.S
+    builtins/arm/dnan2.c
+    builtins/arm/dnorm2.c
+    builtins/arm/dunder.c
+    builtins/arm/extendsfdf2.S
+    builtins/arm/fixdfdi.S
+    builtins/arm/fixdfsi.S
+    builtins/arm/fixsfdi.S
+    builtins/arm/fixsfsi.S
+    builtins/arm/fixunsdfdi.S
+    builtins/arm/fixunsdfsi.S
+    builtins/arm/fixunssfdi.S
+    builtins/arm/fixunssfsi.S
+    builtins/arm/floatdidf.S
+    builtins/arm/floatdisf.S
+    builtins/arm/floatsidf.S
+    builtins/arm/floatsisf.S
+    builtins/arm/floatundidf.S
+    builtins/arm/floatunsidf.S
+    builtins/arm/floatunsisf.S
+    builtins/arm/gedf2.S
+    builtins/arm/gesf2.S
+    builtins/arm/muldf3.S
+    # builtins/arm/thumb1/addsf3.S
+    builtins/arm/thumb1/addsf3fast.S
+    builtins/arm/thumb1/cmpdf2.S
+    builtins/arm/thumb1/cmpsf2.S
+    builtins/arm/thumb1/gedf2.S
+    builtins/arm/thumb1/gesf2.S
+    builtins/arm/thumb1/unorddf2.S
+    builtins/arm/thumb1/unordsf2.S
+    builtins/arm/truncdfsf2.S
+    builtins/arm/unorddf2.S
+    builtins/arm/unordsf2.S
 )
 
 # Files excluded only for cortex-m0plus
 set(COMPILER_RT_EXCLUDED_M0_FILES
     builtins/arm/addsf3vfp.S
-    builtins/arm/chkstk.S
     builtins/arm/clzdi2.S
     builtins/arm/clzsi2.S
     builtins/arm/divmodsi4.S
@@ -322,6 +359,8 @@ set(COMPILER_RT_EXCLUDED_M33_FILES
 
 # Files excluded for all CPUs
 set(COMPILER_RT_EXCLUDED_COMMON_FILES
+    # Windows on Arm stack probe (upstream builds it for MinGW only); gcc cannot even assemble it for Thumb-2
+    builtins/arm/chkstk.S
     builtins/addsf3.c
     builtins/arm/adddf3vfp.S
     builtins/arm/divdf3vfp.S
@@ -402,6 +441,100 @@ set(COMPILER_RT_EXCLUDED_COMMON_FILES
     builtins/umodsi3.c
 )
 
+# LLVM 23's optimized soft-float (upstream COMPILER_RT_ARM_OPTIMIZED_FP, on by default there): faster, somewhat
+# bigger than the generic C. One set per instruction set; each supersedes the C files listed with it, which define
+# the same symbols. Mirrors compiler-rt/lib/builtins/CMakeLists.txt (arm_or_thumb2_optimized_fp_SOURCES,
+# thumb1_base_SOURCES and their set_special_properties SUPERSEDES).
+# Thumb-2 (cortex-m33, cortex-m4); assembled with -mimplicit-it=always as upstream does
+set(COMPILER_RT_OPTIMIZED_FP_THUMB2_FILES
+    builtins/arm/adddf3.S
+    builtins/arm/addsf3.S
+    builtins/arm/cmpdf2.S
+    builtins/arm/cmpsf2.S
+    builtins/arm/divdf3.S
+    builtins/arm/divsf3.S
+    builtins/arm/dnan2.c
+    builtins/arm/dnorm2.c
+    builtins/arm/dunder.c
+    builtins/arm/extendsfdf2.S
+    builtins/arm/fixdfdi.S
+    builtins/arm/fixdfsi.S
+    builtins/arm/fixsfdi.S
+    builtins/arm/fixsfsi.S
+    builtins/arm/fixunsdfdi.S
+    builtins/arm/fixunsdfsi.S
+    builtins/arm/fixunssfdi.S
+    builtins/arm/fixunssfsi.S
+    builtins/arm/floatdidf.S
+    builtins/arm/floatdisf.S
+    builtins/arm/floatsidf.S
+    builtins/arm/floatsisf.S
+    builtins/arm/floatundidf.S
+    builtins/arm/floatunsidf.S
+    builtins/arm/floatunsisf.S
+    builtins/arm/gedf2.S
+    builtins/arm/gesf2.S
+    builtins/arm/muldf3.S
+    builtins/arm/mulsf3.S
+    builtins/arm/truncdfsf2.S
+    builtins/arm/unorddf2.S
+    builtins/arm/unordsf2.S
+)
+
+# ... and what they replace
+set(COMPILER_RT_SUPERSEDED_BY_THUMB2_FP_FILES
+    builtins/arm/aeabi_drsub.c
+    builtins/arm/aeabi_frsub.c
+    builtins/adddf3.c
+    builtins/arm/comparesf2.S
+    builtins/comparedf2.c
+    builtins/divdf3.c
+    builtins/divsf3.c
+    builtins/extendsfdf2.c
+    builtins/fixdfdi.c
+    builtins/fixdfsi.c
+    builtins/fixsfdi.c
+    builtins/fixsfsi.c
+    builtins/fixunsdfdi.c
+    builtins/fixunsdfsi.c
+    builtins/fixunssfdi.c
+    builtins/fixunssfsi.c
+    builtins/floatdidf.c
+    builtins/floatdisf.c
+    builtins/floatsidf.c
+    builtins/floatsisf.c
+    builtins/floatundidf.c
+    builtins/floatundisf.c
+    builtins/floatunsidf.c
+    builtins/floatunsisf.c
+    builtins/muldf3.c
+    builtins/mulsf3.c
+    builtins/subdf3.c
+    builtins/subsf3.c
+    builtins/truncdfsf2.c
+)
+
+# Thumb-1 (cortex-m0plus)
+set(COMPILER_RT_OPTIMIZED_FP_THUMB1_FILES
+    builtins/arm/thumb1/addsf3fast.S
+    builtins/arm/thumb1/cmpdf2.S
+    builtins/arm/thumb1/cmpsf2.S
+    builtins/arm/thumb1/gedf2.S
+    builtins/arm/thumb1/gesf2.S
+    builtins/arm/thumb1/mulsf3.S
+    builtins/arm/thumb1/unorddf2.S
+    builtins/arm/thumb1/unordsf2.S
+)
+
+# ... and what they replace (addsf3.c is excluded for every CPU already)
+set(COMPILER_RT_SUPERSEDED_BY_THUMB1_FP_FILES
+    builtins/arm/aeabi_frsub.c
+    builtins/arm/comparesf2.S
+    builtins/comparedf2.c
+    builtins/mulsf3.c
+    builtins/subsf3.c
+)
+
 set(COMPILER_RT_SOURCE_FILES ${COMPILER_RT_ALL_SOURCE_FILES})
 
 # Remove common excluded files for all CPUs
@@ -409,10 +542,12 @@ list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_COMMON_FILES})
 
 # Remove CPU-specific excluded files
 if(TARGET_CPU STREQUAL "cortex-m0plus")
-    list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M0_FILES})
+    list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M0_FILES} ${COMPILER_RT_OPTIMIZED_FP_THUMB2_FILES}
+         ${COMPILER_RT_SUPERSEDED_BY_THUMB1_FP_FILES})
 endif()
 if(TARGET_CPU STREQUAL "cortex-m33" OR TARGET_CPU STREQUAL "cortex-m4")
-    list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M33_FILES})
+    list(REMOVE_ITEM COMPILER_RT_SOURCE_FILES ${COMPILER_RT_EXCLUDED_M33_FILES} ${COMPILER_RT_OPTIMIZED_FP_THUMB1_FILES}
+         ${COMPILER_RT_SUPERSEDED_BY_THUMB2_FP_FILES})
 endif()
 
 list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
@@ -447,3 +582,15 @@ set(compiler-rt_flags
 list(JOIN compiler-rt_flags " " COMPILER_RT_FLAGS)
 
 set_source_files_properties(${COMPILER_RT_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${COMPILER_RT_FLAGS}")
+
+# The Thumb-2 optimized assembly leaves out the IT instructions (upstream assembles it the same way).
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    set(compiler-rt_implicit_it_flag "-Wa,-mimplicit-it=always")
+else()
+    set(compiler-rt_implicit_it_flag "-mimplicit-it=always")
+endif()
+set(compiler-rt_thumb2_fp_sources ${COMPILER_RT_OPTIMIZED_FP_THUMB2_FILES})
+list(FILTER compiler-rt_thumb2_fp_sources INCLUDE REGEX "\\.S$")
+list(TRANSFORM compiler-rt_thumb2_fp_sources PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
+set_source_files_properties(${compiler-rt_thumb2_fp_sources} PROPERTIES COMPILE_FLAGS
+                                                                    "${COMPILER_RT_FLAGS} ${compiler-rt_implicit_it_flag}")
