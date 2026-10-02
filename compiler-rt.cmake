@@ -28,6 +28,12 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/arm/aeabi_memset.S
     builtins/arm/aeabi_uidivmod.S
     builtins/arm/aeabi_uldivmod.S
+    # unaligned access helpers: clang 23 calls them at -Oz on cores without unaligned access (llvm 09a68427ff); from
+    # llvmorg-23.1.1
+    builtins/arm/aeabi_uread4.S
+    builtins/arm/aeabi_uread8.S
+    builtins/arm/aeabi_uwrite4.S
+    builtins/arm/aeabi_uwrite8.S
     builtins/arm/bswapdi2.S
     builtins/arm/bswapsi2.S
     builtins/arm/chkstk.S
