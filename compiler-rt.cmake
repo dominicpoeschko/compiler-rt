@@ -579,6 +579,14 @@ set(compiler-rt_flags
     -Wno-missing-variable-declarations
     -fno-stack-protector)
 
+# A hard-float core is upstream's armhf target (builtins/CMakeLists.txt adds the define for it): the __*df2/__*sf2
+# helpers take VFP registers there (cmpdf2.S tests __ARM_PCS_VFP), and only with the define do the __aeabi_* wrappers
+# move their core-register arguments over (aeabi_dcmp.S, aeabi_fcmp.S) and the C files use the same ABI (int_lib.h
+# COMPILER_RT_ABI). Without it every __aeabi_dcmp* on an RP2350 compared whatever d0/d1 held (2.0 == 2.0 false).
+if(TARGET_FLOAT_ABI STREQUAL "hard")
+    list(APPEND compiler-rt_flags -DCOMPILER_RT_ARMHF_TARGET)
+endif()
+
 list(JOIN compiler-rt_flags " " COMPILER_RT_FLAGS)
 
 set_source_files_properties(${COMPILER_RT_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${COMPILER_RT_FLAGS}")
