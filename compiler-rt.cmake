@@ -279,6 +279,8 @@ set(COMPILER_RT_ALL_SOURCE_FILES
     builtins/udivmoddi4.c
     builtins/udivmodsi4.c
     builtins/udivmodti4.c
+    # Kvasir's (llvm_port kvasir/compiler-rt/owned.txt): __udivmoddi4 for cores with a 32-bit divide instruction
+    builtins/kvasir/udivmoddi4_udiv.c
     builtins/udivsi3.c
     builtins/udivti3.c
     builtins/umoddi3.c
@@ -325,6 +327,12 @@ set(COMPILER_RT_ALL_SOURCE_FILES
 
 # Files excluded only for cortex-m0plus
 set(COMPILER_RT_EXCLUDED_M0_FILES
+    # the Cortex-M0+ has these entry points in lib/libc/kvasir/arm/memory_v6m.S, next to the functions themselves
+    builtins/arm/aeabi_memcpy.S
+    builtins/arm/aeabi_memmove.S
+    builtins/arm/aeabi_memset.S
+    # no divide instruction: upstream's udivmoddi4.c stays (the RP2040 wraps the calls to its hardware divider)
+    builtins/kvasir/udivmoddi4_udiv.c
     builtins/arm/addsf3vfp.S
     builtins/arm/clzdi2.S
     builtins/arm/clzsi2.S
@@ -353,6 +361,13 @@ set(COMPILER_RT_EXCLUDED_M0_FILES
 # Files excluded for the Thumb-2 cores (cortex-m33, cortex-m4): builtins/arm/clz*.S assembles for them, so the C versions
 # would define __clzsi2/__clzdi2 a second time
 set(COMPILER_RT_EXCLUDED_M33_FILES
+    # the Thumb-2 cores have these entry points in lib/libc/kvasir/arm/memory_v7m.S, next to the functions themselves
+    builtins/arm/aeabi_memcpy.S
+    builtins/arm/aeabi_memmove.S
+    builtins/arm/aeabi_memset.S
+    # superseded by builtins/kvasir/udivmoddi4_udiv.c: three UDIVs instead of one bit per turn (a u64 / u64 877 -> 152
+    # cycles on the RP2350, measured 2026-10-05)
+    builtins/udivmoddi4.c
     builtins/clzdi2.c
     builtins/clzsi2.c
 )
@@ -577,7 +592,8 @@ set(compiler-rt_flags
     -Wno-tautological-value-range-compare
     -Wno-c++-keyword
     -Wno-missing-variable-declarations
-    -fno-stack-protector)
+    -fno-stack-protector
+    -ffreestanding)
 
 # A hard-float core is upstream's armhf target (builtins/CMakeLists.txt adds the define for it): the __*df2/__*sf2
 # helpers take VFP registers there (cmpdf2.S tests __ARM_PCS_VFP), and only with the define do the __aeabi_* wrappers
