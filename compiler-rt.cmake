@@ -366,7 +366,7 @@ set(COMPILER_RT_EXCLUDED_M33_FILES
     builtins/arm/aeabi_memmove.S
     builtins/arm/aeabi_memset.S
     # superseded by builtins/kvasir/udivmoddi4_udiv.c: three UDIVs instead of one bit per turn (a u64 / u64 877 -> 152
-    # cycles on the RP2350, measured 2026-10-05)
+    # cycles on the RP2350)
     builtins/udivmoddi4.c
     builtins/clzdi2.c
     builtins/clzsi2.c

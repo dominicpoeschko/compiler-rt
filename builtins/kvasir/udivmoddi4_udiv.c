@@ -3,7 +3,7 @@
 // __udivmoddi4 for a core with a 32-bit divide instruction (Cortex-M3/M4/M33: UDIV): a 64-bit
 // division in at most three 32-bit divides. Upstream's udivmoddi4.c shifts and subtracts one bit
 // per turn, whatever it is built with - 877 cycles for a u64 / u64 and 1090 for a u64 / 1000 on
-// the RP2350 at -Oz, 777 at -O2 (kvasir_work plans/binary_quality RESULTS.md, 2026-10-05).
+// the RP2350 at -Oz, 777 at -O2.
 // __aeabi_uldivmod, __aeabi_ldivmod (through __divmoddi4), __udivdi3 and __umoddi3 all end here.
 //
 // The method is Hacker's Delight (Warren, 2nd edition) 9-4 "Unsigned Long Division" (divlu) and
