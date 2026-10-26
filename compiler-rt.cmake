@@ -569,29 +569,6 @@ list(TRANSFORM COMPILER_RT_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
 set(compiler-rt_flags
     -fno-builtin
-    -Wno-pedantic
-    -Wno-incompatible-pointer-types
-    -Wno-reserved-id-macro
-    -Wno-unused-parameter
-    -Wno-missing-prototypes
-    -Wno-sign-conversion
-    -Wno-undef
-    -Wno-double-promotion
-    -Wno-shorten-64-to-32
-    -Wno-float-equal
-    -Wno-implicit-int-float-conversion
-    -Wno-missing-noreturn
-    -Wno-cast-align
-    -Wno-implicit-int-conversion
-    -Wno-extra-semi-stmt
-    -Wno-float-conversion
-    -Wno-shift-sign-overflow
-    -Wno-unreachable-code-break
-    -Wno-unsafe-buffer-usage
-    -Wno-visibility
-    -Wno-tautological-value-range-compare
-    -Wno-c++-keyword
-    -Wno-missing-variable-declarations
     -fno-stack-protector
     -ffreestanding)
 

@@ -16,22 +16,13 @@ set(COMPILER_RT_PROFILE_SOURCE_FILES
 
 list(TRANSFORM COMPILER_RT_PROFILE_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
-# the warnings Kvasir's set raises in these upstream files, and nothing more
 set(compiler-rt-profile_flags
     -DCOMPILER_RT_PROFILE_BAREMETAL=1
     "-I${CMAKE_CURRENT_LIST_DIR}/profile"
     "-I${CMAKE_CURRENT_LIST_DIR}/include"
     -fno-builtin
     -fno-stack-protector
-    -ffreestanding
-    -Wno-undef
-    -Wno-sign-conversion
-    -Wno-missing-prototypes
-    -Wno-bad-function-cast
-    -Wno-cast-align
-    -Wno-shorten-64-to-32
-    -Wno-unused-parameter
-    -Wno-alloca)
+    -ffreestanding)
 
 list(JOIN compiler-rt-profile_flags " " COMPILER_RT_PROFILE_FLAGS)
 set_source_files_properties(${COMPILER_RT_PROFILE_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${COMPILER_RT_PROFILE_FLAGS}")
